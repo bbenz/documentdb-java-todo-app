@@ -23,6 +23,17 @@
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
+      <plugin>
+	<groupId>org.eclipse.jetty</groupId>
+	<artifactId>jetty-maven-plugin</artifactId>
+	<version>9.2.11.v20150529</version>
+	<configuration>
+        <webAppSourceDirectory>WebContent</webAppSourceDirectory>             
+        <webXml>WebContent/WEB-INF/web.xml</webXml>
+        <jettyEnvXml>WebContent/WEB-INF/jetty-env.xml</jettyEnvXml>
+        <classesDirectory>target/classes</classesDirectory>
+    </configuration>
+  </plugin>
     </plugins>
   </build>
   <dependencies>
