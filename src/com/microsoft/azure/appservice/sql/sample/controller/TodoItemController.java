@@ -1,12 +1,12 @@
-package com.microsoft.azure.documentdb.sample.controller;
+package com.microsoft.azure.appservice.sql.sample.controller;
 
 import java.util.List;
 
-import lombok.NonNull;
+import com.microsoft.azure.appservice.sql.sample.dao.TodoDao;
+import com.microsoft.azure.appservice.sql.sample.dao.TodoDaoFactory;
+import com.microsoft.azure.appservice.sql.sample.model.TodoItem;
 
-import com.microsoft.azure.documentdb.sample.dao.TodoDao;
-import com.microsoft.azure.documentdb.sample.dao.TodoDaoFactory;
-import com.microsoft.azure.documentdb.sample.model.TodoItem;
+import lombok.NonNull;
 
 public class TodoItemController {
     public static TodoItemController getInstance() {

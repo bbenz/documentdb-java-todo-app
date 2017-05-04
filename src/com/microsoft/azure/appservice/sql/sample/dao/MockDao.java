@@ -1,4 +1,4 @@
-package com.microsoft.azure.documentdb.sample.dao;
+package com.microsoft.azure.appservice.sql.sample.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +9,7 @@ import lombok.NonNull;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.microsoft.azure.documentdb.sample.model.TodoItem;
+import com.microsoft.azure.appservice.sql.sample.model.TodoItem;
 
 public class MockDao implements TodoDao {
     private final Map<String, TodoItem> todoItemMap;

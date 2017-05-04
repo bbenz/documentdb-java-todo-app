@@ -1,4 +1,4 @@
-package com.microsoft.azure.documentdb.sample.model;
+package com.microsoft.azure.appservice.sql.sample.model;
 
 import lombok.Data;
 import lombok.experimental.Builder;

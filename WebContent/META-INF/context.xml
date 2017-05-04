@@ -1,0 +1,12 @@
+<Context>
+<Resource name="jdbc/todoItemDb"
+auth="Container"
+type="javax.sql.DataSource"
+username="root"
+password=""
+driverClassName="com.mysql.jdbc.Driver"
+url="jdbc:mysql://localhost:3306/itemdb"
+maxActive="15"
+maxIdle="3"/>
+<ResourceLink name="jdbc/todoItemDb" global="jdbc/todoItemDb" type="javax.sql.DataSource" />
+</Context>
