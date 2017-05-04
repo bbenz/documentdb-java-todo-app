@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.UUID;
 import java.sql.Connection;
 import javax.sql.DataSource;
+import java.sql.DatabaseMetaData;
 
 import com.microsoft.azure.appservice.sql.sample.model.TodoItem;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.naming.Context;
@@ -26,6 +28,8 @@ public class DocDbDao implements TodoDao {
         	
         	// insert the todo item fields into a new row in the todo item table
         	Connection conn = ds.getConnection();
+        	
+        	createItemsTableIfNotExists(conn);
         	
         	todoItem.setId(UUID.randomUUID().toString());
         	
@@ -51,10 +55,13 @@ public class DocDbDao implements TodoDao {
     	try {
         	// create a connection to the database from the data source
         	Context ctx = new InitialContext();
-        	DataSource ds = (DataSource)ctx.lookup("java:/comp/env/jdbc/todoItemDb");
+        	DataSource ds = (DataSource)ctx.lookup("java:/comp/env/jdbc/todoItemDb");       	
         	
         	// select the todo item from the table. If no matching item, return null
         	Connection conn = ds.getConnection();
+        	
+        	createItemsTableIfNotExists(conn);
+        	
         	String selectIdQuery = "SELECT * FROM ITEMS WHERE ID="+id+";";
         	Statement selectStatement = conn.createStatement();
         	ResultSet rs = selectStatement.executeQuery(selectIdQuery);
@@ -73,6 +80,17 @@ public class DocDbDao implements TodoDao {
     	}
     }
 
+	private void createItemsTableIfNotExists(Connection conn) throws SQLException {
+		DatabaseMetaData meta = conn.getMetaData();
+		ResultSet tableRS =   meta.getTables(null, null, "ITEMS", null);
+		if (!tableRS.next()) {
+			// table does not exist, create ITEMS table
+			String tableCreateQuery = "CREATE TABLE ITEMS ( id varchar(255), name varchar(255), category varchar(255), complete bool);";
+			Statement createTableStatement = conn.createStatement();
+			createTableStatement.execute(tableCreateQuery);
+		}
+	}
+
     @Override
     public List<TodoItem> readTodoItems() {
         List<TodoItem> todoItems = new ArrayList<TodoItem>();
@@ -84,6 +102,9 @@ public class DocDbDao implements TodoDao {
         	
         	// select all todo items from the table. If no matching item, return null
         	Connection conn = ds.getConnection();
+        	
+        	createItemsTableIfNotExists(conn);
+        	
         	String selectIdQuery = "SELECT * FROM ITEMS;";
         	Statement selectStatement = conn.createStatement();
         	ResultSet rs = selectStatement.executeQuery(selectIdQuery);
